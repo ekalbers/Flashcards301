@@ -91,7 +91,7 @@ function addToDeck() {
   newCardArray.push([term, answer]);
   localStorage.setItem('array', JSON.stringify(newCardArray));
   arrayUsed = newCardArray;
-
+  document.newCards.reset();
 }
 
 function checkStorage() {
