@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="Ethan Albers">
+    <meta name="description" content="Use this page to create a deck of Flashcards">
+    <Title>Create a Deck</Title>
+    <link rel="icon" href="img/flash-cards.png" type="imgae/x-con">
+    <link rel='stylesheet' type='text/css' href='css/reset.css' />
+    <link rel='stylesheet' type='text/css' href='css/style.css' />
+</head>
+
+<body>
+    <header>
+        <h1>Make a deck of Flashcards!</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Me</a>
+            <a href="ack.html">Achnowledgements</a>
+        </nav>
+    </header>
+    <hr>
+    <main>
+        <form id="newCards">
+            <input type="text" id="term" placeholder="term">
+            <input type="text" id="answer" placeholder="answer">
+            <button type="button" onclick="addToDeck()">Add</button>
+            <button type="button" onclick="clearDeck()">Clear Deck</button>
+        </form>
+        <div id="flashcards"></div>
+        <script src="js/flashcard.js"></script>
+    </main>
+    <hr>
+    <footer>
+
+    </footer>
+</body>
+
+</html>
