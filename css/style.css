@@ -20,8 +20,29 @@ main {
     justify-content: space-between;
 }
 
+button {
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #ddd;
+  text-align: center;
+  font-size: large;
+  transition: background-color 0.5s ease-in-out;
+  text-decoration: none;
+  color: black;
+  border: none;
+}
+
+input {
+  padding-top: 12px;
+  padding-bottom: 10px;
+  border: black;
+  border-style: solid;
+}
+
 #instructions {
-  padding: 2%;
+  padding: 1%;
 }
 
 #flashcards {
@@ -55,6 +76,7 @@ main {
   padding-bottom: 2%;
   display: center;
   align-items: center;
+  vertical-align: middle;
   
 }
 
@@ -79,16 +101,17 @@ a {
     transition: background-color 0.5s ease-in-out;
     text-decoration: none;
     color: black;
+    font-size: large;
 }
   
-  a:hover {
-    background-color: #ccc;
-  }
+a:hover, #info:hover {
+  background-color: #ccc;
+}
 
-  img {
-    height: fit-content;
-  }
+img {
+  height: fit-content;
+}
 
-  footer {
-    padding: 2%;
-  }
+footer {
+  padding: 2%;
+}  
