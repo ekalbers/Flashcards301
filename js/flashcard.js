@@ -1,8 +1,3 @@
-let newCardArray = checkNewCardArray();
-let i = 0;
-let termAnswer = 0;
-let arrayUsed = [];
-
 //Create array with states and capitals
 const stateCapitalsArray = [  ["Alabama", "Montgomery"],
   ["Alaska", "Juneau"],
@@ -56,6 +51,12 @@ const stateCapitalsArray = [  ["Alabama", "Montgomery"],
   ["Wyoming", "Cheyenne"]
 ];
 
+let arrayUsed = [];
+let newCardArray = [];
+let i = 0;
+let termAnswer = 0;
+checkStorage();
+
 //moves card when right arrow key is pressed
 function cardForward(array) {
   termAnswer = 0;
@@ -64,6 +65,7 @@ function cardForward(array) {
   } else {
     i++;
   }
+  document.getElementById('flashcards').className = 'front';
   document.getElementById("flashcards").innerHTML = array[i][termAnswer];
 }
 
@@ -75,6 +77,7 @@ function cardBack(array) {
   } else {
     i--;
   }
+  document.getElementById('flashcards').className = 'front';
   document.getElementById("flashcards").innerHTML = array[i][termAnswer];
 }
 
@@ -101,10 +104,12 @@ function addToDeck() {
   document.newCards.reset();
 }
 
+//prints the newest card submitted to html page
 function printNewCard(array) {
   i = array.length;
   i--;
   termAnswer = 0;
+  document.getElementById('flashcards').className = 'front';
   document.getElementById("flashcards").innerHTML = array[i][termAnswer];
 }
 
@@ -115,27 +120,21 @@ function clearDeck() {
   arrayUsed = stateCapitalsArray;
   i = 0;
   termAnswer = 0;
+  document.getElementById('flashcards').className = 'front';
   document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
 }
 
+//checking to see if there is already locally stored information to use for a flashcard deck
 function checkStorage() {
   if (localStorage.length > 0) {
-    arrayUsed = JSON.parse(localStorage.getItem('array'));
+    newCardArray = JSON.parse(localStorage.getItem('array'));
+    arrayUsed = newCardArray;
   } else {
+    newCardArray = [];
     arrayUsed = stateCapitalsArray;
   }
 }
 
-function checkNewCardArray() {
-  if (localStorage.length > 0) {
-    return JSON.parse(localStorage.getItem('array')); 
-  } else {
-    let array = [];
-    return array;
-  }
-}
-
-checkStorage();
 console.log(arrayUsed);
 
 document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
