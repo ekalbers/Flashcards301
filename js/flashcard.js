@@ -135,10 +135,10 @@ function checkStorage() {
   }
 }
 
-console.log(arrayUsed);
-
+//display intitial flashcard in the deck
 document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
 
+//event listener for navigating through flashcards
 document.addEventListener("keydown", function(event) {
   switch (event.key) {
     case "ArrowLeft":
