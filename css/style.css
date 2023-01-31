@@ -31,9 +31,18 @@ main {
     background-size: cover;
     text-align: center;
     font-size: 48px;
-    background-image: url('../img/tan-index-card.png');
     justify-content: space-around;
     position: relative;
+}
+
+.front {
+  background-color: none;
+  background-image: url('../img/tan-index-card.png');
+}
+
+.back {
+  background-image: none;
+  background-color: white;
 }
 
 #newCards {

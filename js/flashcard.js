@@ -82,8 +82,10 @@ function cardBack(array) {
 function flipCard(array) {
   if (termAnswer == 0) {
     termAnswer++;
+    document.getElementById('flashcards').className = 'back';
   } else {
     termAnswer--;
+    document.getElementById('flashcards').className = 'front';
   }
   document.getElementById("flashcards").innerHTML = array[i][termAnswer];
 }
