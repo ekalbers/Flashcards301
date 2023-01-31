@@ -1,7 +1,12 @@
-let newCardArray = [];
+let newCardArray = checkNewCardArray();
 let i = 0;
 let termAnswer = 0;
 let arrayUsed = [];
+
+checkStorage();
+console.log(arrayUsed);
+
+document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
 
 //Create array with states and capitals
 const stateCapitalsArray = [  ["Alabama", "Montgomery"],
@@ -56,6 +61,7 @@ const stateCapitalsArray = [  ["Alabama", "Montgomery"],
   ["Wyoming", "Cheyenne"]
 ];
 
+//moves card when right arrow key is pressed
 function cardForward(array) {
   termAnswer = 0;
   if (i == array.length - 1) {
@@ -66,6 +72,7 @@ function cardForward(array) {
   document.getElementById("flashcards").innerHTML = array[i][termAnswer];
 }
 
+//moves card when left arrow key is pressed
 function cardBack(array) {
   termAnswer = 0;
   if (i == 0) {
@@ -76,6 +83,7 @@ function cardBack(array) {
   document.getElementById("flashcards").innerHTML = array[i][termAnswer];
 }
 
+//flips card when up/down arrows are pressed or spacebar
 function flipCard(array) {
   if (termAnswer == 0) {
     termAnswer++;
@@ -85,56 +93,68 @@ function flipCard(array) {
   document.getElementById("flashcards").innerHTML = array[i][termAnswer];
 }
 
+//adds term from form on html page
 function addToDeck() {
   let term = document.getElementById("term").value;
   let answer = document.getElementById("answer").value;
   newCardArray.push([term, answer]);
   localStorage.setItem('array', JSON.stringify(newCardArray));
   arrayUsed = newCardArray;
+  printNewCard(arrayUsed);
   document.newCards.reset();
 }
 
-function checkStorage() {
-  if (localStorage.length > 0) {
-    return JSON.parse(localStorage.getItem('array'));
-  } else {
-    return stateCapitalsArray;
-  }
+function printNewCard(array) {
+  i = array.length;
+  i--;
+  termAnswer = 0;
+  document.getElementById("flashcards").innerHTML = array[i][termAnswer];
 }
 
+//clears deck after button click on html page
 function clearDeck() {
   localStorage.clear();
   newCardArray.length = 0;
   arrayUsed = stateCapitalsArray;
+  i = 0;
+  termAnswer = 0;
+  document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
 }
 
-arrayUsed = checkStorage();
-console.log(arrayUsed);
+function checkStorage() {
+  if (localStorage.length > 0) {
+    arrayUsed = JSON.parse(localStorage.getItem('array'));
+  } else {
+    arrayUsed = stateCapitalsArray;
+  }
+}
 
-document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
+function checkNewCardArray() {
+  if (localStorage.length > 0) {
+    return JSON.parse(localStorage.getItem('array')); 
+  } else {
+    let array = [];
+    return array;
+  }
+}
 
-window.alert("-Use your left and right arrows to navigate between cards.\n-Use your up/down arrows or space bar to navigate between front and back of cards.")
+
 
 document.addEventListener("keydown", function(event) {
   switch (event.key) {
     case "ArrowLeft":
-      console.log("Left arrow key pressed");
       cardBack(arrayUsed);
       break;
     case "ArrowRight":
-      console.log("Right arrow key pressed");
       cardForward(arrayUsed);
       break;
     case "ArrowUp":
-      console.log("Up arrow key pressed");
       flipCard(arrayUsed);
       break;
     case "ArrowDown":
-      console.log("Down arrow key pressed");
       flipCard(arrayUsed);
       break;
     case " ":
-      console.log("Space key pressed");
       flipCard(arrayUsed);
       break;
     }

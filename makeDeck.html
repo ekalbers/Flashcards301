@@ -20,22 +20,21 @@
             <a href="ack.html">Achnowledgements</a>
         </nav>
     </header>
-    <hr>
     <main>
-        <section>
+        <button
+            onclick="alert('Use your left and right arrows to navigate between cards.\n-Use your up/down arrows or space bar to navigate between front and back of cards.')">Instructions</button>
+        <div id="termInput">
             <form name="newCards" id="newCards">
                 <input type="text" id="term" placeholder="term">
                 <input type="text" id="answer" placeholder="answer">
                 <button type="button" onclick="addToDeck()">Add</button>
                 <button type="button" onclick="clearDeck()">Clear Deck</button>
             </form>
-        </section>
+        </div>
         <div id="flashcards"></div>
-        <script src="js/flashcard.js"></script>
     </main>
-    <hr>
     <footer>
-
+        <script src="js/flashcard.js"></script>
     </footer>
 </body>
 
