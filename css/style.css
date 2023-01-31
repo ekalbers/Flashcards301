@@ -104,7 +104,7 @@ a {
     font-size: large;
 }
   
-a:hover, #info:hover {
+a:hover, button:hover {
   background-color: #ccc;
 }
 
