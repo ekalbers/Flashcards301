@@ -3,11 +3,6 @@ let i = 0;
 let termAnswer = 0;
 let arrayUsed = [];
 
-checkStorage();
-console.log(arrayUsed);
-
-document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
-
 //Create array with states and capitals
 const stateCapitalsArray = [  ["Alabama", "Montgomery"],
   ["Alaska", "Juneau"],
@@ -138,7 +133,10 @@ function checkNewCardArray() {
   }
 }
 
+checkStorage();
+console.log(arrayUsed);
 
+document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
 
 document.addEventListener("keydown", function(event) {
   switch (event.key) {
