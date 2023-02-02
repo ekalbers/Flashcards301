@@ -99,14 +99,17 @@ const presidents = [  ["1st", "George Washington"],
   ["45th", "Joe Biden"]
 ];
 
+//Global Variables
 let arrayUsed;
-let newCards = [];
 let decks = [];
 let i = 0;
 let termAnswer = 0;
 let chosenDeck = 0;
 let deckIndex = 0;
 
+//create decks for initial two decks available
+decks.push(new createDeck('stateCapitals',stateCapitals));
+decks.push(new createDeck('presidents',presidents));
 
 //populate decks from above arrays and local storage
 populateDecks();
@@ -115,39 +118,23 @@ populateDecks();
 findDeck('stateCapitals');
 arrayUsed = decks[deckIndex].terms;
 
-//checkStorage();
-
+//constructor function for decks
 function createDeck(name, array) {
-  console.log(name);
   this.name = name;
   this.terms = array;
   this.totalCards = array.length;
-  if (!localStorage.getItem(name)) {
-    localStorage.setItem(name, JSON.stringify(array));
-  }
 }
 
+//Populate Decks held in locatStorage
 function populateDecks() {
-  
-  decks.push(new createDeck('stateCapitals',stateCapitals));
-  //console.log(decks);
-  //console.log(localStorage.getItem('stateCapitals'));
-  decks.push(new createDeck('presidents',presidents));
-  //console.log(decks);
-  //console.log(localStorage.getItem('presidents'));
   let y = [];
   for (let x = 0; x < localStorage.length; x ++) {
     y.push(localStorage.key(x));
-    //console.log(y[x]);
-    //console.log(localStorage.key(x))
-    //console.log(localStorage.getItem(y[x]));
   }
-  for (let x = 2; x < localStorage.length; x++) {
+  for (let x = 0; x < localStorage.length; x++) {
     let array = localStorage.getItem(y[x]);
-    //console.log(y[x]);
     decks.push(new createDeck(y[x],JSON.parse(localStorage.getItem(y[x]))));
     addDeckToSelector(y[x]);
-    //console.log(decks[x]);
   }
 }
 
@@ -189,14 +176,10 @@ function flipCard(array) {
 
 //adds term from form on html page
 function addToDeck() {
-  console.log(document.getElementById("deck").value)
-  console.log(document.getElementById("term").value);
-  console.log(document.getElementById("answer").value);
   let deck = document.getElementById("deck").value;
   findDeck(deck);
   if(deckIndex < decks.length) {
     decks[deckIndex].terms.push([document.getElementById("term").value, document.getElementById("answer").value]);
-    console.log(decks[deckIndex])
     localStorage.setItem(decks[deckIndex].name, JSON.stringify(decks[deckIndex].terms));
   } else {
     decks.push(new createDeck(deck,[[document.getElementById("term").value, document.getElementById("answer").value]]));
@@ -219,8 +202,7 @@ function printNewCard(array) {
 
 //clears deck after button click on html page
 function clearDeck() {
-  localStorage.removeitem(document.getElementById('deck').value)
-  newCards.length = 0;
+  localStorage.clear();
   arrayUsed = stateCapitals;
   i = 0;
   termAnswer = 0;
@@ -228,19 +210,7 @@ function clearDeck() {
   document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
 }
 
-function clearUserDecks() {
-  
-}
-
 //checking to see if there is already locally stored information to use for a flashcard deck
-function checkStorage() {
-  if (localStorage.length > 0) {
-    newCards = JSON.parse(localStorage.getItem('array'));
-    arrayUsed = newCards;
-  } else {
-    arrayUsed = stateCapitals;
-  }
-}
 
 //set the deck based on button clicked on HTML page
 function setDeck(string) {
