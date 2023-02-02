@@ -24,9 +24,12 @@
         <div id="instructions">
             <button
                 onclick="alert('Use your left and right arrows to navigate between cards.\n-Use your up/down arrows or space bar to navigate between front and back of cards.')">Instructions</button>
+            <button id="input" type="button" onclick="setDeck('stateCapitals')">US Capitals</button>
+            <button id="input" type="button" onclick="setDeck('presidents')">US Presidents</button>
         </div>
         <div id="termInput">
-            <form name="newCards" id="newCards">
+            <form id="newCards">
+                <input type="text" id="deck" placeholder="deck">
                 <input type="text" id="term" placeholder="term">
                 <input type="text" id="answer" placeholder="answer">
                 <button id="input" type="button" onclick="addToDeck()">Add</button>
@@ -34,6 +37,8 @@
             </form>
         </div>
         <div id="flashcards" class="front"></div>
+        <div id="newDecks">
+        </div>
     </main>
     <footer>
         <script src="js/flashcard.js"></script>
