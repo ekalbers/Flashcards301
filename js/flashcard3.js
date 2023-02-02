@@ -1,43 +1,3 @@
-//createDeck class with constructor method and others
-class createDeck {
-  constructor(name, array) {
-    this._name = name;
-    this._terms = array;
-  }
-
-  get name() {
-    return this._name;
-  }
-
-  set name(name) {
-    this._name = name;
-  }
-
-  get terms() {
-    return this._terms;
-  }
-
-  set terms(array) {
-    this._terms = array;
-  }
-
-  totalCards() {
-    return this._terms.length;
-  }
-
-  addCard(card) {
-    this._terms.push(card);
-  }
-
-  storeLocal() {
-    localStorage.setItem(this._name,JSON.stringify(this._terms));
-  }
-
-  static getLocal(name) {
-    return new createDeck(name, JSON.parse(localStorage.getItem(name)));
-  }
-}
-
 //Create array with states and capitals
 const stateCapitals = [  ["Alabama", "Montgomery"],
   ["Alaska", "Juneau"],
@@ -141,7 +101,7 @@ const presidents = [  ["1st", "George Washington"],
 
 //Global Variables
 let arrayUsed;
-var decks = [];
+let decks = [];
 let i = 0;
 let termAnswer = 0;
 let chosenDeck = 0;
@@ -158,6 +118,15 @@ populateDecks();
 findDeck('stateCapitals');
 arrayUsed = decks[deckIndex].terms;
 
+//constructor function for decks
+class createDeck {
+  constructor(name, array) {
+    this.name = name;
+    this.terms = array;
+    this.totalCards = array.length;
+  }
+}
+
 //Populate Decks held in locatStorage
 function populateDecks() {
   let y = [];
@@ -165,76 +134,10 @@ function populateDecks() {
     y.push(localStorage.key(x));
   }
   for (let x = 0; x < localStorage.length; x++) {
-    decks.push(createDeck.getLocal(y[x]));
+    let array = localStorage.getItem(y[x]);
+    decks.push(new createDeck(y[x],JSON.parse(localStorage.getItem(y[x]))));
     addDeckToSelector(y[x]);
   }
-}
-
-//adds term from form on html page
-function addToDeck() {
-  let deck = document.getElementById("deck").value;
-  let term = document.getElementById("term").value;
-  let answer = document.getElementById("answer").value;
-  findDeck(deck);
-  if(deckIndex < decks.length) {
-    decks[deckIndex].addCard([term, answer]);
-    document.getElementById(deck).innerHTML = deck+' ('+decks[deckIndex].totalCards()+')';
-  } else {
-    decks.push(new createDeck(deck,[[term, answer]]));
-    addDeckToSelector(deck);
-  }
-  arrayUsed = decks[deckIndex].terms;
-  printNewCard(arrayUsed);
-  decks[deckIndex].storeLocal();
-  document.getElementById('term').value = '';
-  document.getElementById('answer').value = '';
-}
-
-//prints the newest card submitted to html page
-function printNewCard(array) {
-  i = array.length;
-  i--;
-  termAnswer = 0;
-  document.getElementById('flashcards').className = 'front';
-  document.getElementById("flashcards").innerHTML = array[i][termAnswer];
-}
-
-//clears deck after button click on html page
-function clearDeck() {
-  localStorage.clear();
-  arrayUsed = decks[0].terms();
-  i = 0;
-  termAnswer = 0;
-  document.getElementById('flashcards').className = 'front';
-  document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
-}
-
-//set the deck based on button clicked on HTML page
-function setDeck(string) {
-  findDeck(string);
-  i = 0;
-  termAnswer = 0;
-  arrayUsed = decks[deckIndex].terms;
-  document.getElementById('flashcards').className = 'front';
-  document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
-}
-
-function findDeck(string) {
-  deckIndex = 0;
-  while (deckIndex < decks.length && decks[deckIndex].name !== string) {
-    deckIndex++;
-  } 
-}
-
-function addDeckToSelector (deckName) {
-  findDeck(deckName);
-  let div = document.getElementById('newDecks');
-  let newButton = document.createElement('button');
-  newButton.innerHTML = deckName+' ('+decks[deckIndex].totalCards()+')';
-  newButton.id = deckName;
-  newButton.type = 'button';
-  newButton.setAttribute('onclick','setDeck(\''+deckName+'\')');
-  div.appendChild(newButton);
 }
 
 //moves card when right arrow key is pressed
@@ -272,6 +175,78 @@ function flipCard(array) {
   }
   document.getElementById("flashcards").innerHTML = array[i][termAnswer];
 }
+
+//adds term from form on html page
+function addToDeck() {
+  let deck = document.getElementById("deck").value;
+  findDeck(deck);
+  if(deckIndex < decks.length) {
+    decks[deckIndex].terms.push([document.getElementById("term").value, document.getElementById("answer").value]);
+    decks[deckIndex].totalCards++;
+    document.getElementById(deck).innerHTML = deck+' ('+decks[deckIndex].totalCards+')';
+    localStorage.setItem(decks[deckIndex].name, JSON.stringify(decks[deckIndex].terms));
+  } else {
+    decks.push(new createDeck(deck,[[document.getElementById("term").value, document.getElementById("answer").value]]));
+    addDeckToSelector(deck);
+  }
+  arrayUsed = decks[deckIndex].terms;
+  printNewCard(arrayUsed);
+  document.getElementById('term').value = '';
+  document.getElementById('answer').value = '';
+}
+
+//prints the newest card submitted to html page
+function printNewCard(array) {
+  i = array.length;
+  i--;
+  termAnswer = 0;
+  document.getElementById('flashcards').className = 'front';
+  document.getElementById("flashcards").innerHTML = array[i][termAnswer];
+}
+
+//clears deck after button click on html page
+function clearDeck() {
+  localStorage.clear();
+  arrayUsed = stateCapitals;
+  i = 0;
+  termAnswer = 0;
+  document.getElementById('flashcards').className = 'front';
+  document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
+}
+
+//checking to see if there is already locally stored information to use for a flashcard deck
+
+//set the deck based on button clicked on HTML page
+function setDeck(string) {
+  console.log(decks);
+  findDeck(string);
+  i = 0;
+  termAnswer = 0;
+  arrayUsed = decks[deckIndex].terms;
+  document.getElementById('flashcards').className = 'front';
+  document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
+}
+
+function findDeck(string) {
+  deckIndex = 0;
+  while (deckIndex < decks.length && decks[deckIndex].name !== string) {
+    deckIndex++;
+  } 
+}
+
+function addDeckToSelector (deckName) {
+  findDeck(deckName);
+  let div = document.getElementById('newDecks');
+  let newButton = document.createElement('button');
+  newButton.innerHTML = deckName+' ('+decks[deckIndex].totalCards+')';
+  newButton.id = deckName;
+  newButton.type = 'button';
+  newButton.setAttribute('onclick','setDeck(\''+deckName+'\')');
+  div.appendChild(newButton);
+}
+
+let deck = new createDeck("presidents", presidents);
+deck.print();
 
 //display intitial flashcard in the deck
 document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
