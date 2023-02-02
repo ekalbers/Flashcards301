@@ -180,6 +180,8 @@ function addToDeck() {
   findDeck(deck);
   if(deckIndex < decks.length) {
     decks[deckIndex].terms.push([document.getElementById("term").value, document.getElementById("answer").value]);
+    decks[deckIndex].totalCards++;
+    document.getElementById(deck).innerHTML = deck+' ('+decks[deckIndex].totalCards+')';
     localStorage.setItem(decks[deckIndex].name, JSON.stringify(decks[deckIndex].terms));
   } else {
     decks.push(new createDeck(deck,[[document.getElementById("term").value, document.getElementById("answer").value]]));
@@ -231,14 +233,14 @@ function findDeck(string) {
 }
 
 function addDeckToSelector (deckName) {
+  findDeck(deckName);
   let div = document.getElementById('newDecks');
   let newButton = document.createElement('button');
-  newButton.innerHTML = deckName;
-  newButton.id = 'decks';
+  newButton.innerHTML = deckName+' ('+decks[deckIndex].totalCards+')';
+  newButton.id = deckName;
   newButton.type = 'button';
   newButton.setAttribute('onclick','setDeck(\''+deckName+'\')');
   div.appendChild(newButton);
-  console.log('button added');
 }
 
 //display intitial flashcard in the deck
