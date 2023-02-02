@@ -202,11 +202,7 @@ function printNewCard(array) {
 //clears deck after button click on html page
 function clearDeck() {
   localStorage.clear();
-  arrayUsed = decks[0].terms();
-  i = 0;
-  termAnswer = 0;
-  document.getElementById('flashcards').className = 'front';
-  document.getElementById("flashcards").innerHTML = arrayUsed[i][termAnswer];
+  window.location.reload();
 }
 
 //set the deck based on button clicked on HTML page
